@@ -1,0 +1,12 @@
+<div class="flex h-screen w-full overflow-hidden">
+    <section class="scrollbar-thumb-rounded scrollbar-track-rounded grow overflow-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted">
+        <app-above-navbar></app-above-navbar>
+        <app-navbar></app-navbar>
+        <app-index></app-index>
+        <app-carousel-products [title]="'NEW ARRIVALS'" [products]="listNewArrivals()" [isLoading]="isLoadingNewArrivals()"></app-carousel-products>
+        <hr class="w-8/12 border border-gray-200 my-4 m-auto">
+        <app-carousel-products [title]="'TOP SELLING'" [products]="listTopSelling()" [isLoading]="isLoadingTopSelling()"></app-carousel-products>
+        <app-browse-style></app-browse-style>
+        <app-footer></app-footer>
+    </section>
+</div>

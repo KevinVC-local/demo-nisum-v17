@@ -1,0 +1,8 @@
+.titleNav {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1;
+}
+
+.height-calc {
+min-height: calc(100vh - 12.55rem);
+}

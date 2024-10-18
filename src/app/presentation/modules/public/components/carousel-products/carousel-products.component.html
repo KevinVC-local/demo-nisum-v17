@@ -1,0 +1,60 @@
+<section class="bg-white max-w-screen-xl mx-auto w-full md:w-5/6 p-4 md:p-0">
+    <div class="flex flex-wrap items-center justify-around">
+      <div class="font-integralCF flex justify-center items-center p-4">
+        <p class="text-3xl titleNav mt-4">{{ title }}</p>
+      </div>
+    </div>
+    <div class="embla md:w-full w-10/12" >
+        <div class="embla__viewport" emblaCarousel [options]="options">
+            <div class="embla__container gap-4">
+                @for (item of products; track $index) {
+                    <div class="embla__slide">
+                      <div class="embla__slide__number">
+                        @if (!isLoading) {
+                          <div class="flex flex-col select-none max-w-60 w-full">
+                              <div class="relative max-w-60 w-full h-64 pointer-events-none">
+                                  <img
+                                    class="absolute h-full w-auto object-cover rounded-2xl"
+                                    [src]="item.images[0]"
+                                    alt="product"
+                                    appNoImage
+                                  />
+                              </div>
+                              <p class="font-bold text-xs mt-3 mb-1 pointer-events-none">{{item.title}}</p>
+                              <div class="flex items-center mb-2">
+                                  @for (item of [1,1,1,1]; track $index) {
+                                      <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                  }
+                                  <p class="text-xs ml-2 mt-0.5">{{item.rating}} / 5</p>
+                              </div>
+                              <div class="flex">
+                                  <p class="font-bold text-xl">$ {{ item.totalPrice }}</p>
+                                  <p *ngIf="item.discount > 0" class="font-bold text-xl text-gray-400 line-through ml-2 line-through-custom inline-block">
+                                  $ {{ item.price }}
+                                  </p>
+                                  <span *ngIf="item.discount > 0" class="bg-[#FF3333]/25 rounded-xl py-1 px-3 text-xs text-center flex justify-center items-center text-red-500 ml-2">
+                                    {{ item.discountPercentage }}%
+                                  </span>
+                              </div>
+                          </div>
+                        } @else {
+                          <app-skeleton-product></app-skeleton-product>>
+                        }
+                      </div>
+                    </div>
+                }
+            </div>
+          </div>
+    </div>
+    <div
+      class="flex justify-center mt-6 h-20 items-center w-full mb-4"
+    >
+      <button
+        (click)="viewAll()"
+        type="button"
+        class="bg-white border border-border py-2 min-w-40 rounded-2xl text-sm font-semibold h-10 md:w-auto w-full"
+      >
+        View All
+      </button>
+    </div>
+</section>
