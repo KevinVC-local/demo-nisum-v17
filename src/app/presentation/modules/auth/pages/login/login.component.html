@@ -89,7 +89,7 @@
             </div>
         </div>
 
-        <div class="w-full xl:w-1/2 rounded-r-xl rounded-l-xl lg:rounded-l-none border border-t-border border-r-border border-b-border border-l-border lg:border-l-background dark:bg-boxdark h-64 flex">
+        <div class="w-full xl:w-1/2 rounded-r-xl rounded-l-xl lg:rounded-l-none border border-t-border border-r-border border-b-border border-l-border lg:border-l-background dark:bg-boxdark  flex">
             <div class="w-full p-4 sm:p-4 xl:p-5 flex flex-col items-center justify-center">
                 <div class="mb-3 flex justify-center items-center">
                     <p class="text-xl font-bold ml-2 text-muted-foreground">Gestión Ecommerce</p>
@@ -97,7 +97,7 @@
                 <form class="w-full" [formGroup]="loginForm">
                     <mat-form-field class="w-full">
                         <mat-label>Email</mat-label>
-                        <input matInput placeholder="Email*" formControlName="email">
+                        <input matInput placeholder="Email*" type="email" formControlName="email">
                         @if (formValid['email'].errors && formValid['email'].touched) {
                             @if (formValid['email'].errors['required']) {
                                 <mat-error>Email is required</mat-error>
@@ -109,16 +109,23 @@
                     </mat-form-field>
                     <mat-form-field class="w-full">
                         <mat-label>Password</mat-label>
-                        <input matInput placeholder="Password*" formControlName="password">
+                        <input matInput placeholder="Password*" type="password" formControlName="password">
                         @if (formValid['password'].errors && formValid['password'].touched) {
                             @if (formValid['password'].errors['required']) {
                                 <mat-error>Password is required</mat-error>
                             }
                         }
                     </mat-form-field>
-                    <button type="submit" mat-stroked-button (click)="redirectLogin()">Ingresar</button>
+                    <div class="flex justify-between items-center">
+                        <button type="submit" mat-stroked-button (click)="redirectLogin()">Ingresar</button>
+                        <button type="submit" mat-stroked-button (click)="setUserDefault()">User Default</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<ng-container *ngIf="viewToast()">
+    <app-toast [message]="textToast()" [type]="typeToast()" (close)="viewToast.set(false)"></app-toast>
+</ng-container>

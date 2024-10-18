@@ -1,0 +1,12 @@
+export const N150 = 150;
+export const N10 = 10;
+export const N20 = 20;
+export const N50 = 50;
+export const N100 = 100;
+export const N2 = 2;
+export const NN40 = -40;
+export const N40 = 40;
+export const N1000 = 1000;
+export const N1024 = 1024;
+export const N300 = 300;
+export const N3000 = 3000;
