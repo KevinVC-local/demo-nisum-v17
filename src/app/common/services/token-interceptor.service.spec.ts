@@ -1,64 +1,62 @@
+import { HttpEvent, HttpRequest } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HTTP_INTERCEPTORS, HttpClient, HttpRequest } from '@angular/common/http';
+import { of, throwError } from 'rxjs';
+import { StorageManagerService } from './storage-manager.service';
+import { LoginResponse } from '../../presentation/modules/auth/interfaces/login';
+import authInterceptor from './token-interceptor.service';
+import { runInInjectionContext } from '@angular/core';
 
-import { TokenInterceptorService } from './token-interceptor.service';
-import { of } from 'rxjs';
-
-describe('TokenInterceptorService', () => {
-  let service: TokenInterceptorService;
-  let httpMock: HttpTestingController;
-  let httpClient: HttpClient;
+describe('AuthInterceptor', () => {
+  let storageManagerService: jasmine.SpyObj<StorageManagerService>;
+  let router: jasmine.SpyObj<Router>;
 
   beforeEach(() => {
+    const storageSpy = jasmine.createSpyObj('StorageManagerService', ['get', 'removeLocalAndSessionStorage']);
+    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
       providers: [
-        TokenInterceptorService,
-        {
-          provide: HTTP_INTERCEPTORS,
-          useClass: TokenInterceptorService,
-          multi: true
-        }
-      ]
+        { provide: StorageManagerService, useValue: storageSpy },
+        { provide: Router, useValue: routerSpy },
+      ],
     });
 
-    service = TestBed.inject(TokenInterceptorService);
-    httpMock = TestBed.inject(HttpTestingController);
-    httpClient = TestBed.inject(HttpClient);
+    storageManagerService = TestBed.inject(StorageManagerService) as jasmine.SpyObj<StorageManagerService>;
+    router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
   });
 
-  afterEach(() => {
-    httpMock.verify();
-  });
+  it('should add Authorization header if token is present and route is protected', (done) => {
+    const mockToken: LoginResponse = { access_token: 'test-token', refresh_token: 'refresh_token' };
+    storageManagerService.get.and.returnValue(mockToken);
 
-  describe('intercept', () => {
-    it('should add an Authorization header to the request if the route is protected', () => {
-      service['protectedRoutes'] = ['protected'];
-      const url = 'https://example.com/protected';
-      const next: any = {
-				handle: (request: HttpRequest<any>) => {
-					expect(request.headers.get('Authorization')).toEqual('Bearer environment.token')
-					return of({}) as any;
-				},
-			};
-      service.intercept(new HttpRequest('GET', url), next).subscribe();
-    });
+    const request = new HttpRequest('GET', '/auth/user');
+    const next = jasmine.createSpy('next').and.returnValue(of({} as HttpEvent<unknown>));
 
-    it('should not add an Authorization header to the request if the route is not protected', () => {
-      service['protectedRoutes'] = ['protected'];
-      const url = 'https://example.com/non-protected';
-      const request = httpClient.get(url).subscribe();
-      const httpRequest = httpMock.expectOne(url);
-      expect(httpRequest.request.headers.has('Authorization')).toBe(false);
+    // Ejecutamos el interceptor dentro de un contexto de inyección válido
+    runInInjectionContext(TestBed, () => {
+      authInterceptor(request, next).subscribe(() => {
+        const modifiedRequest = next.calls.first().args[0] as HttpRequest<unknown>;
+        expect(modifiedRequest.headers.get('Authorization')).toBe('Bearer test-token');
+        done();
+      });
     });
   });
 
-  describe('isRouteProtected', () => {
-    it('should return true if the route is protected', () => {
-      service['protectedRoutes'] = ['protected'];
-      const url = 'https://example.com/protected';
-      expect(service['isRouteProtected'](url)).toBe(true);
+  it('should handle 401 and 403 errors by clearing storage and redirecting to /auth', (done) => {
+    const request = new HttpRequest('GET', '/auth/user');
+    const next = jasmine.createSpy('next').and.returnValue(
+      throwError(() => ({ status: 401 }))
+    );
+
+    runInInjectionContext(TestBed, () => {
+      authInterceptor(request, next).subscribe({
+        error: () => {
+          expect(storageManagerService.removeLocalAndSessionStorage).toHaveBeenCalled();
+          expect(router.navigate).toHaveBeenCalledWith(['/auth']);
+          done();
+        },
+      });
     });
   });
 });

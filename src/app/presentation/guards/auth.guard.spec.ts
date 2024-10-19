@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { CanActivateFn, Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 
 import { authGuard } from './auth.guard';
-import { StorageManagerService } from '../services/storage-manager.service';
+import { StorageManagerService } from '../../common/services/storage-manager.service';
 
 
 describe('authGuard', () => {
@@ -20,7 +20,7 @@ describe('authGuard', () => {
   describe('authGuard', () => {
     it('should return true if user is logged in', () => {
       const storageManagerService = TestBed.inject(StorageManagerService);
-      spyOn(storageManagerService, 'get').and.returnValue('accessToken');
+      spyOn(storageManagerService, 'get').and.returnValue('tokenUser');
 
       const route: ActivatedRouteSnapshot = {} as ActivatedRouteSnapshot;
       const state: RouterStateSnapshot = {} as RouterStateSnapshot;

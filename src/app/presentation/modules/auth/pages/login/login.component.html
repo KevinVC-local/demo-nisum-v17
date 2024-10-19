@@ -126,6 +126,8 @@
     </div>
 </div>
 
-<ng-container *ngIf="viewToast()">
-    <app-toast [message]="textToast()" [type]="typeToast()" (close)="viewToast.set(false)"></app-toast>
-</ng-container>
+@if (viewToast()) {
+    <ng-container>
+        <app-toast [message]="textToast()" [type]="typeToast()" (close)="viewToast.set(false)"></app-toast>
+    </ng-container>
+}
