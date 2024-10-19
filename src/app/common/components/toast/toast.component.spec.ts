@@ -33,8 +33,8 @@ describe('ToastComponent', () => {
       });
     });
 
-    it('should set dataTaoast to delete if type is delete', () => {
-      component.type = 'delete';
+    it('should set dataTaoast to delete if type is error', () => {
+      component.type = 'error';
       component.dataToastAsing();
       expect(component.dataTaoast).toEqual({
         icon: './assets/img/error.png',

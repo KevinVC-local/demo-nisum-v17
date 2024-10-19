@@ -53,7 +53,7 @@ describe('AuthInterceptor', () => {
       authInterceptor(request, next).subscribe({
         error: () => {
           expect(storageManagerService.removeLocalAndSessionStorage).toHaveBeenCalled();
-          expect(router.navigate).toHaveBeenCalledWith(['/auth']);
+          expect(router.navigate).toHaveBeenCalledWith(['/auth/login']);
           done();
         },
       });
