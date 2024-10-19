@@ -13,12 +13,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { ModalConfirmComponent } from '../../components/modal-confirm/modal-confirm.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastComponent } from "../../../../../common/components/toast/toast.component";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-users',
   standalone: true,
   imports: [NoImageDirective, MatTableModule, FormsModule, MatFormFieldModule, MatInputModule,
-    ReactiveFormsModule, MatPaginatorModule, MatButtonModule, ToastComponent],
+    ReactiveFormsModule, MatPaginatorModule, MatButtonModule, ToastComponent, MatProgressSpinnerModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

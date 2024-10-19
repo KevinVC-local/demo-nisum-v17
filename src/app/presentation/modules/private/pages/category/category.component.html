@@ -40,47 +40,51 @@
                 <button type="submit" mat-stroked-button (click)="cancelEdit()">Cancelar</button>
             </div>
         </div>
-        <div class="col-span-12 md:col-span-6 lg:col-span-8 overflow-auto"> 
-            <table mat-table [dataSource]="categoryList()">
+        <div class="col-span-12 md:col-span-6 lg:col-span-8 overflow-auto">
+            @if (!isLoading()) {
+                <table mat-table [dataSource]="categoryList()">
+        
     
-
-                <!-- Name Column -->
-                <ng-container matColumnDef="name">
-                  <th mat-header-cell *matHeaderCellDef> Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                </ng-container>
-              
-                <!-- Weight Column -->
-                <ng-container matColumnDef="image">
-                    <th mat-header-cell *matHeaderCellDef> Image </th>
-                    <td mat-cell *matCellDef="let element"> 
-                        <img [src]="element.image" alt="" appNoImage class="rounded-full w-10 h-10 mr-2"> </td>
-                  </ng-container>
-              
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="options">
-                    <th mat-header-cell *matHeaderCellDef> Options </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="flex">
-                            <button (click)="handleEditCategory(element)"
-                            class="flex h-8 w-8 mr-2 items-center justify-center rounded-md bg-gray-400 text-gray-200 hover:bg-muted hover:text-foreground">
-                            <i class="fa-solid fa-pen-to-square text-lg"></i>
-                            </button>
-                            <button  type="button" (click)="handleDeleteCategory(element)"
-                                class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md bg-gray-400 text-gray-200 hover:bg-muted hover:text-foreground">
-                                <i class="fa-solid fa-trash text-lg"></i>
-                            </button>
-                        </div> 
-                    </td>
-                </ng-container>
-              
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" #paginator
-                showFirstLastButtons
-                aria-label="Select page of periodic elements">
-            </mat-paginator>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                      <th mat-header-cell *matHeaderCellDef> Name </th>
+                      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+                  
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="image">
+                        <th mat-header-cell *matHeaderCellDef> Image </th>
+                        <td mat-cell *matCellDef="let element"> 
+                            <img [src]="element.image" alt="" appNoImage class="rounded-full w-10 h-10 mr-2"> </td>
+                      </ng-container>
+                  
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="options">
+                        <th mat-header-cell *matHeaderCellDef> Options </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="flex">
+                                <button (click)="handleEditCategory(element)"
+                                class="flex h-8 w-8 mr-2 items-center justify-center rounded-md bg-gray-400 text-gray-200 hover:bg-muted hover:text-foreground">
+                                <i class="fa-solid fa-pen-to-square text-lg"></i>
+                                </button>
+                                <button  type="button" (click)="handleDeleteCategory(element)"
+                                    class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md bg-gray-400 text-gray-200 hover:bg-muted hover:text-foreground">
+                                    <i class="fa-solid fa-trash text-lg"></i>
+                                </button>
+                            </div> 
+                        </td>
+                    </ng-container>
+                  
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" #paginator
+                    showFirstLastButtons
+                    aria-label="Select page of periodic elements">
+                </mat-paginator>
+            } @else {
+                <mat-spinner diameter="64"></mat-spinner>
+            }
         </div>
           
     </div>

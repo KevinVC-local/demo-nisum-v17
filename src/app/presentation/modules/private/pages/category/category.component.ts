@@ -13,12 +13,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { CategoryList } from '../../interfaces/category';
 import { ModalConfirmComponent } from '../../components/modal-confirm/modal-confirm.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-category',
   standalone: true,
   imports: [NoImageDirective, MatTableModule, FormsModule, MatFormFieldModule, MatInputModule,
-    ReactiveFormsModule, MatPaginatorModule, MatButtonModule, ToastComponent],
+    ReactiveFormsModule, MatPaginatorModule, MatButtonModule, ToastComponent, MatProgressSpinnerModule],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss'
 })
