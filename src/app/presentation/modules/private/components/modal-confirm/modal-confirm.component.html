@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>{{title()}} </h2>
+<mat-dialog-content>
+  <p>{{message()}}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="flex justify-between items-center w-full">
+        <button mat-button (click)="onNoClick()">No Thanks</button>
+        <button mat-button (click)="onYesClick()" cdkFocusInitial>Ok</button>
+    </div>
+</mat-dialog-actions>

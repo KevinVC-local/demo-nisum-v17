@@ -26,7 +26,7 @@ describe('ToastComponent', () => {
       component.type = 'success';
       component.dataToastAsing();
       expect(component.dataTaoast).toEqual({
-        icon: './assets/icons/success.png',
+        icon: './assets/img/success.png',
         color: 'text-green-500',
         spam: 'Check icon',
         bgColor: 'bg-teal-100'
@@ -37,7 +37,7 @@ describe('ToastComponent', () => {
       component.type = 'delete';
       component.dataToastAsing();
       expect(component.dataTaoast).toEqual({
-        icon: './assets/icons/error.png',
+        icon: './assets/img/error.png',
         color: 'text-red-500',
         spam: 'Error icon',
         bgColor: 'bg-red-100'
@@ -48,7 +48,7 @@ describe('ToastComponent', () => {
       component.type = 'warning';
       component.dataToastAsing();
       expect(component.dataTaoast).toEqual({
-        icon: './assets/icons/warning.png',
+        icon: './assets/img/warning.png',
         color: 'text-orange-500',
         spam: 'Warning icon',
         bgColor: 'bg-orange-100'
@@ -59,7 +59,7 @@ describe('ToastComponent', () => {
       component.type = 'default';
       component.dataToastAsing();
       expect(component.dataTaoast).toEqual({
-        icon: './assets/icons/success.png',
+        icon: './assets/img/success.png',
         color: 'text-green-500',
         spam: 'Check icon',
         bgColor: 'bg-teal-100'

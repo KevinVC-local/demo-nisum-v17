@@ -21,7 +21,8 @@ export class LayoutComponent implements OnInit, OnDestroy{
   mobileQuery: MediaQueryList;
   fillerNav = [
     {name: 'Users', route: '/dashboard/users', icon: 'person'},
-    {name: 'Settings', route: '/dashboard/products', icon: 'settings'},
+    {name: 'Product', route: '/dashboard/products', icon: 'settings'},
+    {name: 'Category', route: '/dashboard/category', icon: 'settings'},
   ];
   public openOptionsUser = signal(false);
 
