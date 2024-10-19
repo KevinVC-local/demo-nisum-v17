@@ -35,7 +35,7 @@ export const authInterceptor: HttpInterceptorFn = (
 
       if (CODES_STATUS.includes(error.status)) {
         storageManagerService.removeLocalAndSessionStorage();
-        router.navigate(['/auth']);
+        router.navigate(['/auth/login']);
       }
 
       return throwError(() => error);
